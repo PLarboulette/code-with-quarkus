@@ -1,5 +1,7 @@
 package plarboulette;
 
+import io.smallrye.mutiny.Uni;
+import plarboulette.services.IAsyncService;
 import plarboulette.services.IConsumerService;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -17,6 +19,9 @@ public class GreetingResource {
 
     @Inject
     public IConsumerService consumer;
+
+    @Inject
+    public IAsyncService asyncService;
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
@@ -65,6 +70,14 @@ public class GreetingResource {
     @Produces(MediaType.TEXT_PLAIN)
     public String environment () {
         return environment;
+    }
+
+    // Example of async call (reactive) (Use of Uni)
+    @GET
+    @Path("async")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Uni<String> getMessage () {
+        return asyncService.getMessage();
     }
 
 }
