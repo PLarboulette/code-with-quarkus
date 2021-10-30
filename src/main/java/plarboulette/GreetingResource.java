@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 @Path("/hello")
 public class GreetingResource {
@@ -30,6 +31,7 @@ public class GreetingResource {
         return "Test";
     }
 
+    // Example of functional programming
     @GET
     @Path("Functional")
     @Produces(MediaType.TEXT_PLAIN)
@@ -42,14 +44,27 @@ public class GreetingResource {
 
         Map<Integer, Integer> value = Map.of(1 ,1);
 
-        return "Value : " + test.toString();
+        return "Value : " + test;
     }
 
+    // Example of dependency injection
     @GET
     @Path("/consumer")
     @Produces(MediaType.TEXT_PLAIN)
     public String consume () {
         return consumer.consume();
+    }
+
+
+    // Example of how to use properties
+    @ConfigProperty(name = "environment")
+    String environment;
+
+    @GET
+    @Path("environment")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String environment () {
+        return environment;
     }
 
 }
