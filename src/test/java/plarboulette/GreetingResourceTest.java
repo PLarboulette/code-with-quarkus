@@ -3,6 +3,8 @@ package plarboulette;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
 
+import java.beans.Transient;
+
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 
@@ -16,6 +18,24 @@ public class GreetingResourceTest {
           .then()
              .statusCode(200)
              .body(is("Hello RESTEasy"));
+    }
+
+    @Test
+    public void testGetMessage() {
+        given()
+                .when().get(("/hello/async"))
+                .then()
+                .statusCode(200)
+                .body(is("Hello from async service"));
+    }
+
+    @Test
+    public void testEnvironment () {
+        given()
+                .when().get("/hello/environment")
+                .then()
+                .statusCode(200)
+                .body(is("production"));
     }
 
 }
