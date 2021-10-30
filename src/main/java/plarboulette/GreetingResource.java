@@ -1,5 +1,8 @@
 package plarboulette;
 
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Tags;
+import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import io.smallrye.mutiny.Uni;
 import plarboulette.services.IAsyncService;
 import plarboulette.services.IConsumerService;
@@ -8,6 +11,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,6 +27,13 @@ public class GreetingResource {
     @Inject
     public IAsyncService asyncService;
 
+    private final MeterRegistry registry;
+
+    public GreetingResource(MeterRegistry _registry) {
+        this.registry = _registry;
+    }
+
+    // Endpoints
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String hello() {
@@ -80,4 +91,23 @@ public class GreetingResource {
         return asyncService.getMessage();
     }
 
+    // Example of metrics
+    // The metrics are available here : http://localhost:8080/q/metrics. It lets for example for Prometheus to scrap the metrics :)
+    // Here, you can easily write a query with PromQL like that : calls {function = "counter"} tto return the number of calls on the first function.
+    // Or display that in Grafana ^_^
+    @GET
+    @Path("/counter")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String counter() {
+        registry.counter("calls", Tags.of("function", "counter")).increment();
+        return "Test";
+    }
+
+    @GET
+    @Path("/counter2")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String counter2() {
+        registry.counter("calls", Tags.of("function", "counter2")).increment();
+        return "Test";
+    }
 }
