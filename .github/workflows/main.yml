@@ -1,4 +1,4 @@
-name: Quarkus
+name: Test Quarkus App
 on:
   push:
     branches:
@@ -13,8 +13,8 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        java: ['11' ]
-    name: Java ${{ matrix.Java }} sample
+        java: ['11', '17']
+    name: Test Quarkus App
     steps:
       - uses: actions/checkout@v2
       - name: Setup java
