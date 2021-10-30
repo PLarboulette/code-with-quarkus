@@ -1,8 +1,6 @@
 package plarboulette;
 
 import io.quarkus.test.junit.QuarkusTest;
-import io.smallrye.mutiny.Uni;
-import io.smallrye.mutiny.helpers.test.UniAssertSubscriber;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import plarboulette.services.impl.AsyncService;
@@ -10,7 +8,7 @@ import plarboulette.services.impl.AsyncService;
 import javax.inject.Inject;
 
 @QuarkusTest
-public class AsyncServiceTest {
+public class AsyncServiceTest{
 
 
     // See https://github.com/quarkusio/quarkus/blob/main/extensions/mutiny/deployment/src/test/java/io/quarkus/mutiny/deployment/test/MutinyTest.java

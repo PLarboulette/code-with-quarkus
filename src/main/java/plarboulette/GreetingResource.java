@@ -95,6 +95,7 @@ public class GreetingResource {
     // The metrics are available here : http://localhost:8080/q/metrics. It lets for example for Prometheus to scrap the metrics :)
     // Here, you can easily write a query with PromQL like that : calls {function = "counter"} tto return the number of calls on the first function.
     // Or display that in Grafana ^_^
+    // See also https://quarkus.io/guides/micrometer. An alternative exists, Microprofile metrics, but i('s not recommended by Quarkus team
     @GET
     @Path("/counter")
     @Produces(MediaType.TEXT_PLAIN)
