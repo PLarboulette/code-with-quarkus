@@ -6,6 +6,8 @@ import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import io.smallrye.mutiny.Uni;
 import plarboulette.services.IAsyncService;
 import plarboulette.services.IConsumerService;
+
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
+@ApplicationScoped
 @Path("/hello")
 public class GreetingResource {
 

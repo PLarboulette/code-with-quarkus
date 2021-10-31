@@ -1,8 +1,11 @@
 package plarboulette;
 
 import plarboulette.models.Book;
+
+import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -10,6 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 
+@ApplicationScoped
 @Path("/books")
 public class BookResource {
 
@@ -29,13 +33,19 @@ public class BookResource {
     }
 
     @GET
-    @Path("/name}")
+    @Path("/{name}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.TEXT_PLAIN)
-    public Optional<Book> getById (String name) {
-        return books.stream().filter(
+    public Response getById (@PathParam("name") String name) {
+        Optional<Book> oBook = books.stream().filter(
                 book -> book.getName().equals(name)
+
         ).findFirst();
+        if (oBook.isEmpty()) {
+            return Response.status(Response.Status.NOT_FOUND.getStatusCode(), "Unknown book: " + name).build();
+        } else {
+            return Response.ok(oBook).build();
+        }
     }
 
     @POST
@@ -51,7 +61,7 @@ public class BookResource {
     @Path("/{name}")
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.TEXT_PLAIN)
-    public boolean delete (String name) {
+    public boolean delete (@PathParam("name") String name) {
        books = books.stream().filter(book -> !book.getName().equals(name)).collect(Collectors.toList());
        return true;
     }
