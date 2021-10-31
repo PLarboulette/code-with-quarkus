@@ -24,4 +24,4 @@ jobs:
           java-version: ${{ matrix.java }}
           cache: 'maven'
       - name: Test with Maven
-        run: ./mvnw test
+        run: ./mvnw verify

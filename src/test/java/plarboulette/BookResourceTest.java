@@ -38,7 +38,6 @@ public class BookResourceTest {
                 .then()
                 .statusCode(200)
                 .body("$.size()", is(2));
-
     }
 
 }
